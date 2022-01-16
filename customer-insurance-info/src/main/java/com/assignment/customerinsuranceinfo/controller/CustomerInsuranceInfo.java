@@ -9,6 +9,7 @@ import com.assignment.customerinsuranceinfo.model.InsuranceItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +24,20 @@ public class CustomerInsuranceInfo {
 
     @RequestMapping("/insurance")
     public CustomerInsurance getCustomerInsurance(@RequestParam("custId") long custId) {
-
+        /*
+         * return new CustomerInsurance(1, "Adolf Dsilva", "01068339", List.of(
+         * new
+         * InsuranceInfo(22771282L,"Term Insurance","Term Insurance is life insurance"
+         * ,50, 500.00, "20230120"),new InsuranceInfo(22771282L,"Covid Insurance"
+         * ,"Covid Insurance is for covid coverage", 50, 500.00, "20230120")));
+         */
         CustomerInsurance customerInsurance = restTemplate.getForObject(
                 "http://customer-info-service/customer/profile?custId=" + custId,
                 CustomerInsurance.class);
 
         ResponseEntity<InsuranceInfo[]> insuranceResponse = restTemplate
-                .getForEntity("http://customer-info-service/customer/insurance?custId=" + custId, InsuranceInfo[].class);
+                .getForEntity("http://customer-info-service/customer/insurance?custId=" + custId,
+                        InsuranceInfo[].class);
         List<InsuranceInfo> custInsurances = Arrays.asList(insuranceResponse.getBody());
 
         custInsurances.forEach(insurance -> {
