@@ -15,7 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerInsuranceInfo {
 
     @RequestMapping("/{custId}")
-    public CustomerInsurance getCustomerInsurance(@PathVariable("custId") String custId) {
+    public CustomerInsurance getCustomerInsurance(@PathVariable("custId") long custId) {
+
+        //TODO: get insurance info
+
+        //TODO: get customer info
+
+        //TODO: combine the info and send
         return new CustomerInsurance(1, "Adolf Dsilva", "01068339", Collections.singletonList(new Insurance(22771282L, "Term Insurance", "Term Insurance is life insurance")));
     }
     
