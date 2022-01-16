@@ -2,7 +2,7 @@ package com.assignment.customerinsuranceinfo.controller;
 
 import com.assignment.customerinsuranceinfo.model.AuthRequest;
 import com.assignment.customerinsuranceinfo.model.AuthResponse;
-import com.assignment.customerinsuranceinfo.service.CustomUserDetailsService;
+import com.assignment.customerinsuranceinfo.service.InsuranceUserDetailsService;
 import com.assignment.customerinsuranceinfo.utils.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class LoginController {
 	private JwtUtil jwtTokenUtil;
 
 	@Autowired
-	private CustomUserDetailsService userDetailsService;
+	private InsuranceUserDetailsService userDetailsService;
 
 	@RequestMapping(value = "/auth", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authenticationRequest) throws Exception {

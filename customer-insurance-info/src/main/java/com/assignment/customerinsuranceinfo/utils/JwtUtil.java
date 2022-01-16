@@ -21,6 +21,10 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
 
+    public String extractId(String token) {
+        return extractClaim(token, Claims::getId);
+    }
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }

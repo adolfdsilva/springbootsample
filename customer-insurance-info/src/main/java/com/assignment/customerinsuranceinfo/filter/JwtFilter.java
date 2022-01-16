@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.assignment.customerinsuranceinfo.service.CustomUserDetailsService;
+import com.assignment.customerinsuranceinfo.service.InsuranceUserDetailsService;
 import com.assignment.customerinsuranceinfo.utils.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private InsuranceUserDetailsService userDetailsService;
 
     @Autowired
     private JwtUtil jwtUtil;
