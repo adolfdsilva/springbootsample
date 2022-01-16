@@ -1,9 +1,7 @@
-package com.assignment.customerinsuranceinfo.model;
+package com.assignment.customerinfoservice.model;
 
 public class Insurance {
     private long policyNumber;
-    private String insuranceName;
-    private String insuranceDesc;
     private int term;
     private double premium;
     private String nextPaymentDate;
@@ -11,10 +9,8 @@ public class Insurance {
     public Insurance() {
     }
 
-    public Insurance(long policyNumber, String name, String desc, int term, double premium, String nextPaymentDate) {
+    public Insurance(long policyNumber, int term, double premium, String nextPaymentDate) {
         this.policyNumber = policyNumber;
-        this.insuranceName = name;
-        this.insuranceDesc = desc;
         this.term = term;
         this.premium = premium;
         this.nextPaymentDate = nextPaymentDate;
@@ -26,22 +22,6 @@ public class Insurance {
 
     public void setPolicyNumber(long policyNumber) {
         this.policyNumber = policyNumber;
-    }
-
-    public String getName() {
-        return this.insuranceName;
-    }
-
-    public void setName(String name) {
-        this.insuranceName = name;
-    }
-
-    public String getDesc() {
-        return this.insuranceDesc;
-    }
-
-    public void setDesc(String desc) {
-        this.insuranceDesc = desc;
     }
 
     public int getTerm() {

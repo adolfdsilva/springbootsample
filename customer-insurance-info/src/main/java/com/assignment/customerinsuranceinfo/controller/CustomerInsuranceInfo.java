@@ -1,33 +1,47 @@
 package com.assignment.customerinsuranceinfo.controller;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
 
 import com.assignment.customerinsuranceinfo.model.CustomerInsurance;
-import com.assignment.customerinsuranceinfo.model.Insurance;
+import com.assignment.customerinsuranceinfo.model.InsuranceInfo;
+import com.assignment.customerinsuranceinfo.model.InsuranceItem;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/custinsurance")
+@RequestMapping("/customer")
 public class CustomerInsuranceInfo {
 
     @Autowired
     private RestTemplate restTemplate;
 
-    @RequestMapping("/{custId}")
-    public CustomerInsurance getCustomerInsurance(@PathVariable("custId") long custId) {
+    @RequestMapping("/insurance")
+    public CustomerInsurance getCustomerInsurance(@RequestParam("custId") long custId) {
 
-        // TODO: get insurance info
+        CustomerInsurance customerInsurance = restTemplate.getForObject(
+                "http://localhost:8083/customer/profile?custId=" + custId,
+                CustomerInsurance.class);
 
-        // TODO: get customer info
+        ResponseEntity<InsuranceInfo[]> insuranceResponse = restTemplate
+                .getForEntity("http://localhost:8083/customer/insurance?custId=" + custId, InsuranceInfo[].class);
+        List<InsuranceInfo> custInsurances = Arrays.asList(insuranceResponse.getBody());
 
-        // TODO: combine the info and send
-        return new CustomerInsurance(1, "Adolf Dsilva", "01068339", Collections.singletonList(new Insurance(22771282L,
-                "Term Insurance", "Term Insurance is life insurance", 10, 500.00, "20230120")));
+        custInsurances.forEach(insurance -> {
+            final InsuranceItem tempItem = restTemplate.getForObject(
+                    "http://localhost:8082/insurance/filter?policyNumber=" + insurance.getPolicyNumber(),
+                    InsuranceItem.class);
+            insurance.setInsuranceName(tempItem.getName());
+            insurance.setInsuranceDesc(tempItem.getDesc());
+        });
+
+        customerInsurance.setInsurances(custInsurances);
+        return customerInsurance;
     }
 
 }

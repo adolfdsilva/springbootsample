@@ -6,15 +6,14 @@ public class CustomerInsurance {
     private long custId;
     private String custName;
     private String custMobile;
-    private List<Insurance> insurances;
+    private List<InsuranceInfo> insurances;
 
     public CustomerInsurance(){}
 
-    public CustomerInsurance(long custId, String custName, String custMobile, List<Insurance> insurances ) {
+    public CustomerInsurance(long custId, String custName, String custMobile) {
         this.custId = custId;
         this.custName = custName;
         this.custMobile = custMobile;
-        this.insurances = insurances;
     }
 
     public long getCustId() {
@@ -41,11 +40,11 @@ public class CustomerInsurance {
         this.custMobile = custMobile;
     }
 
-    public List<Insurance> getInsurances() {
+    public List<InsuranceInfo> getInsurances() {
         return this.insurances;
     }
 
-    public void setInsurances(List<Insurance> insurances) {
+    public void setInsurances(List<InsuranceInfo> insurances) {
         this.insurances = insurances;
     }    
 

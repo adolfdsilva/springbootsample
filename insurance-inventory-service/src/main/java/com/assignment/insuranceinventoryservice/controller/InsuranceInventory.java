@@ -1,8 +1,6 @@
 package com.assignment.insuranceinventoryservice.controller;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.assignment.insuranceinventoryservice.model.InsuranceItem;
 
@@ -25,10 +23,9 @@ public class InsuranceInventory {
     }
 
     @RequestMapping("/filter")
-    public List<InsuranceItem> getInsuranceById(@RequestParam("policyNumbers") Long[] policyNumbers) {
-        final List<Long> policyNumbersAsList = Arrays.asList(policyNumbers);
-        return insurances.stream().filter((insurance) -> policyNumbersAsList.contains(insurance.getPolicyNumber()))
-                .collect(Collectors.toList());
+    public InsuranceItem getInsuranceById(@RequestParam("policyNumber") long policyNumber) {
+        return insurances.stream().filter((insurance) -> policyNumber == insurance.getPolicyNumber()).findFirst()
+                .orElse(null);
 
     }
 }

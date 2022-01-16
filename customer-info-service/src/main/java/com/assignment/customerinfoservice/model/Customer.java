@@ -6,13 +6,12 @@ public class Customer {
     private String custName;
     private String custMobile;
 
-    public Customer(){}
-
     public Customer(long custId, String custName, String custMobile) {
         this.custId = custId;
         this.custName = custName;
         this.custMobile = custMobile;
     }
+
     public long getCustId() {
         return this.custId;
     }
@@ -36,5 +35,4 @@ public class Customer {
     public void setCustMobile(String custMobile) {
         this.custMobile = custMobile;
     }
-
 }
