@@ -25,16 +25,16 @@ public class CustomerInsuranceInfo {
     public CustomerInsurance getCustomerInsurance(@RequestParam("custId") long custId) {
 
         CustomerInsurance customerInsurance = restTemplate.getForObject(
-                "http://localhost:8083/customer/profile?custId=" + custId,
+                "http://customer-info-service/customer/profile?custId=" + custId,
                 CustomerInsurance.class);
 
         ResponseEntity<InsuranceInfo[]> insuranceResponse = restTemplate
-                .getForEntity("http://localhost:8083/customer/insurance?custId=" + custId, InsuranceInfo[].class);
+                .getForEntity("http://customer-info-service/customer/insurance?custId=" + custId, InsuranceInfo[].class);
         List<InsuranceInfo> custInsurances = Arrays.asList(insuranceResponse.getBody());
 
         custInsurances.forEach(insurance -> {
             final InsuranceItem tempItem = restTemplate.getForObject(
-                    "http://localhost:8082/insurance/filter?policyNumber=" + insurance.getPolicyNumber(),
+                    "http://insurance-inventory-service/insurance/filter?policyNumber=" + insurance.getPolicyNumber(),
                     InsuranceItem.class);
             insurance.setInsuranceName(tempItem.getName());
             insurance.setInsuranceDesc(tempItem.getDesc());
