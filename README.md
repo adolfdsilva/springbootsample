@@ -3,8 +3,8 @@
 
 1. Run discovery-server.
 2. Run insurance-inventory-service.
-3. Run customer-insurance-info.
-4. Run customer-info-service.
+3. Run customer-info-service.
+4. Run customer-insurance-info.
 5. Goto http://localhost:8761.
 6. You should find CUSTOMER-INFO-SERVICE running on port 8081, note the ip for the service.
 7. Use Postman or any other REST client and call ${ip}/auth on the ip.
