@@ -11,5 +11,5 @@
 	<br>username: adolf
 	<br>password: Adolfd@123
 8. You should get jwt token in response.
-9. Copy jwt token and call ${ip}/customer/insurance.
+9. Copy jwt token and passit as Bearer Authentication in GET api call (${ip}/customer/insurance)
 10. You should get a response of all the insruances the customer has opted for.
