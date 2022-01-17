@@ -1,0 +1,135 @@
+openapi: 3.0.1
+info:
+  title: Insurance
+  description: 'This is for assignment and have apis for microservices related to insurance.'
+  contact:
+    email: adolfdsilva@gmail.com
+  version: 1.0.0
+externalDocs:
+  description: Created using Swagger, Learn More
+  url: http://swagger.io
+servers:
+- url: http://localhost:8761
+tags:
+- name: user
+paths:
+  /auth:
+    post:
+      tags:
+      - user
+      summary: Authenticate user and get JWT.
+      operationId: auth
+      requestBody:
+        description: Pass username and password
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                username: 
+                  type: string
+                password: 
+                  type: string
+              required: 
+                - username
+                - password
+      responses:
+        403:
+          description: Invalid username or password
+          content: {}
+      security:
+      - insurance_auth:
+        - read:jwt
+  /customer/insurance:
+    get:
+      tags:
+      - user
+      summary: Get customer info and list of purchased insurances
+      description: Get List of insurances
+      operationId: insurance
+      parameters:
+      - name: status
+        in: query
+        description: Status values that need to be considered for filter
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            default: available
+            enum:
+            - available
+            - pending
+            - sold
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                description: jwt will be returned
+        403:
+          description: Forbidden, jwt is invlaid or expired
+          content: {}
+      security:
+      - insurance_auth:
+        - read:jwt
+components:
+  schemas:
+    Insurance:
+      type: object
+      properties:
+        policyNumber:
+          type: integer
+          format: int64
+        term:
+          type: integer
+          format: int32
+        premium:
+          type: integer
+          format: double
+        nextPaymentDate:
+          type: string
+          format: date
+        insuranceName:
+          type: string
+          description: Name of the insurance
+        insuranceDesc:
+          type: string
+          description: Detailed information about the insurance
+    CustomerInfo:
+      type: object
+      properties:
+        custId:
+          type: integer
+          format: int64
+        custName:
+          type: string
+        custMobile:
+          type: string
+        insurances:
+          type: array
+          description: Insurance object list
+          items:
+            type: object
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+  securitySchemes:
+    insurance_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://localhost:8081/auth
+          scopes:
+            read:insurance: get your jwt
